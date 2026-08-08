@@ -392,12 +392,12 @@
     <em>You Get Energy.</em>
   </div>
   <div class="nav-links">
-    <a href="ugetenergy.com">Home<span class="nav-underline"></span></a>
-    <a href="ugetenergy.com/technology.html">Technology<span class="nav-underline"></span></a>
-    <a href="ugetenergy.com/leadership.html">Leadership<span class="nav-underline"></span></a>
-    <a href="ugetenergy.com/projects.html">Projects<span class="nav-underline"></span></a>
-    <a href="ugetenergy.com/landscape.html">Landscape<span class="nav-underline"></span></a>
-    <a href="ugetenergy.com/contact.html" class="nav-contact">Contact</a>
+    <a href="https://ugetenergy.com">Home<span class="nav-underline"></span></a>
+    <a href="https://ugetenergy.com/technology">Technology<span class="nav-underline"></span></a>
+    <a href="https://ugetenergy.com/leadership">Leadership<span class="nav-underline"></span></a>
+    <a href="https://ugetenergy.com/projects">Projects<span class="nav-underline"></span></a>
+    <a href="https://ugetenergy.com/landscape">Landscape<span class="nav-underline"></span></a>
+    <a href="https://ugetenergy.com/contact" class="nav-contact">Contact</a>
   </div>
 </nav>
 
@@ -752,7 +752,7 @@ orbitDot('orbitDot2', 260, 115, 300, 300, 18, -1, 90);
 orbitDot('orbitDot3', 260, 115, 300, 300, 22, 1, 180);
 orbitDot('orbitDot4', 180, 180, 300, 300, 10, -1, 45);
 
-// Nucleus pulse (anime.js)
+
 anime({
   targets: '#atomNucleus',
   scale: [1, 1.4, 1],
@@ -762,14 +762,14 @@ anime({
   loop: true
 });
 
-// Atom entrance and idle float (motion.dev)
+
 if (window.Motion) {
   const { animate } = window.Motion;
   animate('#atomOrbit', { opacity: [0, 1], scale: [0.85, 1] }, { duration: 1.2, delay: 0.3, easing: 'ease-out' });
   animate('#atomOrbit', { y: [0, -12, 0] }, { duration: 6.8, repeat: Infinity, easing: 'ease-in-out' });
 }
 
-// Ticker subtle fade in
+
 gsap.from('.ticker-bar', {
   opacity: 0,
   y: 24,
@@ -778,7 +778,7 @@ gsap.from('.ticker-bar', {
   delay: 0.8
 });
 
-// Continuous horizontal ticker scroll
+
 const tickerTrack = document.querySelector('.ticker-track');
 if (tickerTrack) {
   tickerTrack.innerHTML += tickerTrack.innerHTML;
@@ -824,7 +824,6 @@ gsap.utils.toArray('.cf-fill').forEach((bar) => {
   });
 });
 
-// LCOE comparison bars fill on scroll (GSAP)
 gsap.utils.toArray('.lcoe-bar').forEach((bar) => {
   const finalWidth = bar.style.width;
   gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' });
@@ -836,7 +835,6 @@ gsap.utils.toArray('.lcoe-bar').forEach((bar) => {
   });
 });
 
-// Isotope card highlight pulse (anime.js)
 anime({
   targets: '.iso-value',
   color: ['#55828b', '#87bba2', '#55828b'],
@@ -846,19 +844,19 @@ anime({
   delay: anime.stagger(400)
 });
 
-// Navigation bar animation (motion.dev)
+
 if (window.Motion) {
   const { animate, stagger } = window.Motion;
   const navLinkEls = document.querySelectorAll('.nav-links a');
 
-  // Staggered entrance on load
+ 
   animate(
     navLinkEls,
     { opacity: [0, 1], y: [-10, 0] },
     { duration: 0.6, delay: stagger(0.07, { startDelay: 0.2 }), easing: [0.22, 1, 0.36, 1] }
   );
 
-  // Smooth per-link hover animation, replacing the old CSS transition
+  
   navLinkEls.forEach((link) => {
     const underline = link.querySelector('.nav-underline');
     const isContact = link.classList.contains('nav-contact');
@@ -890,7 +888,6 @@ if (window.Motion) {
   });
 }
 
-// Nav bar hide/reveal on scroll direction (motion.dev spring)
 (function () {
   const navEl = document.querySelector('nav');
   if (!navEl || !window.Motion) return;
