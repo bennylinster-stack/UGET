@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Utah Green Energy Technologies — Clean Power, Grown Not Built</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/motion@11.13.5/dist/motion.js"></script>
+<style>
+  :root{
+    --white:#ffffff;
+    --mist:#f4f9f5;
+    --sage-100:#c9e4ca;
+    --sage-300:#87bba2;
+    --teal-600:#55828b;
+    --ink:#1c3336;
+    --ink-dim:#5f7679;
+    --line:rgba(28,51,54,0.12);
+    --line-soft:rgba(28,51,54,0.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:auto;}
+  body{
+    background:var(--white);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--teal-600);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:'';width:16px;height:1px;background:var(--sage-300);display:inline-block;}
+  h1,h2,h3{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;color:var(--ink);}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px;}
+  @media(max-width:700px){.wrap{padding:0 22px;}}
+
+  /* NAV */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:24px 40px;
+    background:rgba(255,255,255,0.7);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:600;font-size:16px;letter-spacing:.01em;}
+  .brand-mark{width:24px;height:24px;flex-shrink:0;}
+  .brand .brand-energy{font-style:italic;color:var(--teal-600);display:inline-block;margin-left:0.12em;}
+  .nav-links{display:flex;align-items:center;gap:32px;font-size:13px;font-family:'IBM Plex Mono',monospace;}
+  .nav-links a{
+    position:relative;
+    color:var(--ink-dim);
+    padding:4px 0;
+    cursor:pointer;
+    display:inline-block;
+    opacity:0;
+  }
+  .nav-underline{
+    position:absolute;
+    left:0;
+    bottom:-4px;
+    width:100%;
+    height:2px;
+    background:var(--teal-600);
+    transform-origin:left;
+    transform:scaleX(0);
+  }
+  .nav-links a.nav-contact{
+    padding:8px 18px;
+    border:1px solid var(--teal-600);
+    border-radius:999px;
+    color:var(--teal-600);
+  }
+  @media(max-width:800px){.nav-links{display:none;}}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:150px 40px 0;
+    background:
+      radial-gradient(circle at 82% 20%, rgba(201,228,202,0.9), transparent 50%),
+      radial-gradient(circle at 15% 85%, rgba(135,187,162,0.35), transparent 45%),
+      var(--white);
+    overflow:hidden;
+  }
+  .atom-orbit{
+    position:absolute;top:8%;right:4%;
+    width:min(48vw,600px);height:min(48vw,600px);
+  }
+  @media(max-width:900px){.atom-orbit{right:-14%;top:2%;opacity:.7;width:80vw;height:80vw;}}
+  #atomNucleus{transform-box:fill-box;transform-origin:center;}
+  .hero-top{position:relative;z-index:2;padding-top:16px;}
+  .hero h1{
+    font-size:clamp(42px,6.2vw,80px);
+    line-height:1.02;max-width:760px;margin-top:20px;
+    font-weight:500;
+  }
+  .hero h1 em{font-style:italic;color:var(--teal-600);font-weight:500;}
+  .hero-sub{
+    max-width:420px;color:var(--ink-dim);font-size:15px;line-height:1.7;margin-top:26px;
+  }
+  .hero-actions{display:flex;align-items:center;gap:16px;margin-top:36px;padding-bottom:56px;position:relative;z-index:2;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.03em;
+    padding:14px 22px;border-radius:30px;border:1px solid var(--line);
+    display:inline-flex;align-items:center;gap:10px;
+    transition:transform .2s ease, background-color .2s ease, color .2s ease, border-color .2s ease;
+    will-change:transform;
+  }
+  .btn.primary{background:var(--teal-600);border-color:var(--teal-600);color:#fff;font-weight:500;}
+  .btn:hover{transform:translateY(-2px) scale(1.02);}
+  .btn:active{transform:translateY(0) scale(0.98);}
+  .btn.primary:hover{background:#456f77;}
+  .btn.ghost{color:var(--ink);}
+  .btn.ghost:hover{border-color:var(--teal-600);color:var(--teal-600);}
+
+  .ticker-bar{border-top:1px solid var(--line-soft);overflow:hidden;position:relative;background:var(--mist);}
+  .ticker-track{display:flex;white-space:nowrap;width:max-content;}
+  .ticker-track span{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);
+    padding:14px 34px;border-right:1px solid var(--line-soft);
+    flex-shrink:0;
+  }
+  .ticker-track span b{color:var(--teal-600);font-weight:500;}
+
+  .demand{
+    padding:100px 0 80px;
+    background:var(--mist);
+    color:var(--ink);
+  }
+  .demand-inner{max-width:840px;margin:0 auto;}
+  .demand-head{margin:0 auto 40px;text-align:left;}
+  .demand-head h2{font-size:clamp(32px,4vw,48px);line-height:1.1;margin-bottom:22px;color:var(--ink);}
+  .demand-head p{color:var(--ink-dim);font-size:15px;line-height:1.8;max-width:720px;}
+  .demand-grid{display:grid;gap:24px;max-width:720px;margin:0 auto;}
+  .demand-card{
+    padding:34px 30px;
+    border:1px solid var(--line-soft);
+    border-radius:24px;
+    background:var(--white);
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .demand-card h3{margin:0;}
+  .demand-card .count{
+    display:inline-block;
+    font-size:clamp(42px,6vw,56px);
+    line-height:1;
+    color:var(--teal-600);
+    font-family:'Fraunces',serif;
+  }
+  .demand-card span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-600);display:block;margin-bottom:10px;}
+  .demand-card span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-600);display:block;margin-bottom:10px;}
+  .demand-card p{color:var(--ink-dim);font-size:15px;line-height:1.8;margin:0;}
+  .demand-footer{margin-top:30px;color:var(--ink-dim);font-size:15px;line-height:1.8;max-width:720px;}
+  .demand-footer a{color:var(--teal-600);text-decoration:underline;}
+
+  /* MISSION */
+  .mission{padding:130px 0 90px;text-align:center;}
+  .mission .eyebrow{justify-content:center;}
+  .mission h2{
+    font-size:clamp(26px,3.3vw,40px);max-width:760px;margin:22px auto 0;line-height:1.3;
+    font-weight:400;
+  }
+  .mission h2 .accent{color:var(--teal-600);font-style:italic;}
+
+  /* PROOF */
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:70px;padding:60px 0 100px;align-items:start;}
+  @media(max-width:820px){.proof{grid-template-columns:1fr;gap:36px;}}
+  .proof h2{font-size:clamp(28px,3.4vw,42px);line-height:1.15;font-weight:500;}
+  .proof-copy p{color:var(--ink-dim);font-size:15px;line-height:1.8;margin-top:18px;}
+  .proof-copy p strong{color:var(--ink);font-weight:600;}
+
+  .img-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-bottom:110px;}
+  @media(max-width:700px){.img-grid{grid-template-columns:1fr;}}
+  .tex-card{aspect-ratio:4/5;border-radius:18px;position:relative;overflow:hidden;border:1px solid var(--line-soft);}
+  .tex-1{background:
+      repeating-linear-gradient(115deg, rgba(85,130,139,0.12) 0 2px, transparent 2px 28px),
+      linear-gradient(160deg,#eaf4ec,#c9e4ca);}
+  .tex-2{background:
+      radial-gradient(circle at 30% 30%, rgba(85,130,139,0.28), transparent 55%),
+      linear-gradient(200deg,#dcecdf,#87bba2);}
+  .tex-card::after{
+    content:attr(data-cap);position:absolute;left:18px;bottom:16px;
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink);
+    letter-spacing:.03em;background:rgba(255,255,255,0.65);padding:5px 10px;border-radius:20px;
+  }
+
+  /* CULTURE */
+  .culture{display:grid;grid-template-columns:0.9fr 1.1fr;gap:70px;padding:40px 0 120px;align-items:center;}
+  @media(max-width:820px){.culture{grid-template-columns:1fr;gap:30px;}}
+  .culture h2{font-size:clamp(28px,3.6vw,44px);line-height:1.18;font-weight:500;}
+  .culture h2 span{color:var(--teal-600);font-style:italic;}
+  .culture p{color:var(--ink-dim);font-size:15px;line-height:1.8;margin-top:18px;max-width:440px;}
+  .link-arrow{
+    margin-top:26px;display:inline-flex;align-items:center;gap:8px;
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--teal-600);
+    border-bottom:1px solid var(--sage-300);padding-bottom:6px;
+  }
+
+  /* FACILITY BANNER */
+  .facility{
+    position:relative;height:56vh;min-height:380px;border-radius:24px;overflow:hidden;
+    background:
+      linear-gradient(0deg, rgba(28,51,54,0.55), rgba(28,51,54,0.05) 45%),
+      linear-gradient(120deg,#c9e4ca 0%, #87bba2 45%, #55828b 100%);
+    display:flex;align-items:flex-end;margin-bottom:130px;
+  }
+  .facility-cap{
+    padding:30px 34px;border-top:1px solid rgba(255,255,255,0.25);
+    background:rgba(255,255,255,0.14);backdrop-filter:blur(8px);
+    max-width:340px;margin:0 34px 34px;border-radius:14px;
+  }
+  .facility-cap p{font-family:'Fraunces',serif;font-size:17px;color:#fff;font-weight:500;}
+  .facility-cap span{display:block;margin-top:6px;color:#eaf6ec;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.05em;}
+
+  /* FIXED PRICE */
+  .fixed-price{padding:0 0 60px;text-align:center;}
+  .fixed-price .eyebrow{justify-content:center;}
+  .fixed-price h2{font-size:clamp(26px,3.5vw,42px);margin-top:20px;font-weight:500;}
+  .fixed-price h2 .accent{color:var(--teal-600);font-style:italic;}
+  .fixed-price p{color:var(--ink-dim);max-width:520px;margin:18px auto 0;font-size:15px;line-height:1.8;}
+
+  .container-block{
+    margin:60px auto 0;max-width:920px;aspect-ratio:16/6;border-radius:24px;
+    background:linear-gradient(120deg,#55828b,#87bba2);
+    display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+  }
+  .container-block::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.25), transparent 50%);
+  }
+  .container-block h3{
+    font-size:clamp(22px,4.2vw,50px);color:#fff;text-align:center;line-height:1.1;font-weight:500;
+    position:relative;z-index:1;
+  }
+  .container-block h3 em{font-style:italic;opacity:.72;}
+
+  .timeline-stats{max-width:840px;margin:0 auto 60px;display:grid;gap:22px;}
+  .timeline-stats .stats-head{display:grid;gap:16px;}
+  .timeline-stats .stats-head h2{font-size:clamp(28px,3.2vw,40px);line-height:1.15;max-width:720px;color:var(--ink);margin:0;}
+  .timeline-stats .stats-list{display:grid;gap:18px;}
+  .timeline-stats .stat-card{padding:30px 32px;border:1px solid var(--line-soft);border-radius:24px;background:var(--white);display:grid;gap:14px;}
+  .timeline-stats .stat-value{font-size:clamp(42px,6vw,58px);line-height:1;color:var(--teal-600);font-family:'Fraunces',serif;}
+  .timeline-stats .stat-label{font-size:17px;line-height:1.35;font-weight:500;color:var(--ink);}
+  .timeline-stats .stat-note{color:var(--ink-dim);font-size:15px;line-height:1.75;margin:0;}
+
+  /* ECONOMICS */
+  .economics{padding:20px 0 120px;}
+  .economics .stats-head{max-width:720px;margin:0 auto 50px;text-align:left;}
+  .economics .stats-head h2{font-size:clamp(28px,3.6vw,44px);line-height:1.15;margin-top:18px;font-weight:500;color:var(--ink);}
+  .economics .stats-head p{color:var(--ink-dim);font-size:15px;line-height:1.8;margin-top:18px;max-width:640px;}
+
+  .plant-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:840px;margin:0 auto 60px;}
+  @media(max-width:700px){.plant-grid{grid-template-columns:1fr;}}
+  .plant-card{padding:32px 30px;border:1px solid var(--line-soft);border-radius:24px;background:var(--white);}
+  .plant-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-600);display:block;margin-bottom:20px;}
+  .plant-row{display:flex;align-items:baseline;gap:12px;margin-bottom:4px;}
+  .plant-value{font-family:'Fraunces',serif;font-size:clamp(30px,4vw,40px);color:var(--teal-600);line-height:1;}
+  .plant-label{color:var(--ink-dim);font-size:13px;}
+  .plant-sub{color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;font-size:12px;margin:6px 0 22px;}
+
+  .cf-block,.lcoe-block,.isotope-block,.partners-block{max-width:840px;margin:0 auto 60px;}
+  .cf-bars{margin-top:22px;display:grid;gap:16px;}
+  .cf-row{display:grid;grid-template-columns:170px 1fr 48px;align-items:center;gap:14px;}
+  @media(max-width:600px){.cf-row{grid-template-columns:110px 1fr 40px;}}
+  .cf-label{font-size:13px;color:var(--ink-dim);}
+  .cf-track{height:10px;border-radius:6px;background:var(--mist);overflow:hidden;border:1px solid var(--line-soft);}
+  .cf-fill{height:100%;width:0%;border-radius:6px;}
+  .cf-fill.cf-uget{background:var(--teal-600);}
+  .cf-fill.cf-wind{background:var(--sage-300);}
+  .cf-fill.cf-solar{background:var(--sage-100);}
+  .cf-pct{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--ink);text-align:right;}
+
+  .lcoe-list{margin-top:22px;display:grid;gap:14px;}
+  .lcoe-row{display:grid;grid-template-columns:200px 1fr;align-items:center;gap:14px;}
+  @media(max-width:600px){.lcoe-row{grid-template-columns:1fr;gap:6px;}}
+  .lcoe-name{font-size:13px;color:var(--ink-dim);}
+  .lcoe-row.is-uget .lcoe-name{color:var(--ink);font-weight:600;}
+  .lcoe-range{position:relative;height:14px;background:var(--mist);border-radius:8px;border:1px solid var(--line-soft);}
+  .lcoe-bar{position:absolute;top:0;height:100%;border-radius:8px;background:var(--sage-300);}
+  .lcoe-row.is-uget .lcoe-bar{background:var(--teal-600);}
+  .lcoe-bar span{position:absolute;top:50%;left:100%;transform:translateY(-50%);margin-left:8px;
+    font-family:'IBM Plex Mono',monospace;white-space:nowrap;color:var(--ink-dim);font-size:11px;}
+  .lcoe-row.is-uget .lcoe-bar span{color:var(--ink);font-weight:600;}
+  .lcoe-scale{display:flex;justify-content:space-between;margin-top:8px;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-dim);}
+
+  .isotope-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:22px;}
+  @media(max-width:700px){.isotope-grid{grid-template-columns:1fr;}}
+  .isotope-card{padding:28px 26px;border:1px solid var(--line-soft);border-radius:24px;background:var(--mist);}
+  .iso-value{display:block;font-family:'Fraunces',serif;font-size:clamp(26px,3.4vw,34px);color:var(--teal-600);margin-bottom:10px;}
+  .isotope-card p{color:var(--ink-dim);font-size:14.5px;line-height:1.7;margin:0;}
+  .isotope-card p strong{color:var(--ink);}
+
+  .partners-block .fuel-strip{justify-content:flex-start;margin-top:22px;}
+
+  /* QUOTE */
+  .quote{padding:130px 0;text-align:center;}
+  .quote blockquote{
+    font-family:'Fraunces',serif;font-weight:500;font-style:italic;
+    font-size:clamp(22px,3.1vw,34px);line-height:1.4;max-width:760px;margin:0 auto;color:var(--ink);
+  }
+  .quote-mark{font-size:56px;color:var(--sage-300);font-family:'Fraunces',serif;line-height:0;display:block;margin-bottom:14px;}
+  .quote-attr{margin-top:30px;color:var(--ink-dim);font-size:13px;font-family:'IBM Plex Mono',monospace;}
+  .quote-attr b{color:var(--teal-600);font-weight:500;}
+
+  .reveal{opacity:1;transform:none;}
+
+  /* INVEST */
+  .invest{background:var(--mist);padding:110px 0;border-radius:28px;margin:0 40px 120px;}
+  @media(max-width:700px){.invest{margin:0 16px 90px;padding:80px 0;}}
+  .invest-inner{max-width:640px;margin:0 auto;text-align:center;padding:0 24px;}
+  .invest .eyebrow{justify-content:center;}
+  .invest h2{font-size:clamp(28px,4vw,46px);margin-top:18px;line-height:1.18;font-weight:500;}
+  .invest h2 .accent{color:var(--teal-600);font-style:italic;}
+  .invest p{color:var(--ink-dim);font-size:15px;line-height:1.8;margin-top:20px;}
+  .invest .btn.primary{margin-top:30px;}
+
+  .fuel-strip{display:flex;justify-content:center;gap:14px;margin-top:44px;flex-wrap:wrap;}
+  .fuel-chip{
+    border:1px solid var(--line);background:var(--white);
+    padding:10px 16px;border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;display:inline-block;}
+  .dot.thorium{background:var(--teal-600);}
+  .dot.uranium{background:var(--sage-300);}
+  .dot.salt{background:var(--sage-100);border:1px solid var(--line);}
+
+  /* NEWS */
+  .news{padding:20px 0 130px;}
+  .news-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:40px;}
+  .news-head h2{font-size:clamp(22px,2.5vw,30px);font-weight:500;}
+  .news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+  @media(max-width:820px){.news-grid{grid-template-columns:1fr;}}
+  .news-card{border-top:1px solid var(--line-soft);padding-top:18px;}
+  .news-thumb{aspect-ratio:4/3;border-radius:16px;margin-bottom:16px;}
+  .thumb-1{background:linear-gradient(135deg,#c9e4ca,#87bba2);}
+  .thumb-2{background:linear-gradient(135deg,#eaf4ec,#c9e4ca);}
+  .thumb-3{background:linear-gradient(135deg,#87bba2,#55828b);}
+  .news-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--teal-600);letter-spacing:.06em;text-transform:uppercase;}
+  .news-card h3{font-size:16px;margin-top:10px;line-height:1.45;font-weight:500;font-family:'Fraunces',serif;}
+
+  /* FOOTER */
+  footer{border-top:1px solid var(--line-soft);padding:80px 0 40px;background:var(--mist);}
+  .footer-top{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;padding-bottom:60px;}
+  @media(max-width:700px){.footer-top{grid-template-columns:1fr;gap:36px;}}
+  footer h2{font-size:clamp(24px,3.1vw,36px);line-height:1.2;font-weight:500;}
+  footer h2 span{color:var(--teal-600);font-style:italic;}
+  .signup{display:flex;gap:0;margin-top:26px;max-width:380px;border:1px solid var(--line);border-radius:30px;overflow:hidden;}
+  .signup input{flex:1;background:transparent;border:none;padding:14px 18px;color:var(--ink);font-family:'Inter',sans-serif;font-size:13px;outline:none;}
+  .signup button{background:var(--teal-600);border:none;color:#fff;padding:0 22px;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;cursor:pointer;}
+  .footer-cols{display:flex;gap:70px;flex-wrap:wrap;}
+  .footer-cols h4{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .footer-cols a{display:block;font-size:14px;margin-bottom:12px;color:var(--ink-dim);transition:color .2s;}
+  .footer-cols a:hover{color:var(--teal-600);}
+  .footer-bottom{
+    display:flex;justify-content:space-between;padding-top:28px;border-top:1px solid var(--line-soft);
+    font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);flex-wrap:wrap;gap:10px;
+  }
+
+  .reveal{opacity:0;transform:translateY(28px);}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10.5" stroke="#55828b" stroke-width="1.3"/>
+      <path d="M12 4.5 C15.5 8 15.5 16 12 19.5 C8.5 16 8.5 8 12 4.5Z" stroke="#87bba2" stroke-width="1.1"/>
+      <circle cx="12" cy="12" r="1.6" fill="#55828b"/>
+    </svg>
+    <em>You Get Energy.</em>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home<span class="nav-underline"></span></a>
+    <a href="technology.html">Technology<span class="nav-underline"></span></a>
+    <a href="leadership.html">Leadership<span class="nav-underline"></span></a>
+    <a href="projects.html">Projects<span class="nav-underline"></span></a>
+    <a href="landscape.html">Landscape<span class="nav-underline"></span></a>
+    <a href="contact.html" class="nav-contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <svg class="atom-orbit" id="atomOrbit" viewBox="0 0 600 600" fill="none">
+    <circle id="atomNucleus" cx="300" cy="300" r="5" fill="#55828b"/>
+    <g><ellipse id="orbitPath1" cx="300" cy="300" rx="260" ry="115" stroke="#87bba2" stroke-width="0.9" opacity="0.55" fill="none"/><circle id="orbitDot1" cx="0" cy="0" r="5" fill="#55828b"/></g>
+    <g transform="rotate(60 300 300)"><ellipse id="orbitPath2" cx="300" cy="300" rx="260" ry="115" stroke="#55828b" stroke-width="0.9" opacity="0.5" fill="none"/><circle id="orbitDot2" cx="0" cy="0" r="5" fill="#87bba2"/></g>
+    <g transform="rotate(120 300 300)"><ellipse id="orbitPath3" cx="300" cy="300" rx="260" ry="115" stroke="#c9e4ca" stroke-width="0.9" opacity="0.6" fill="none"/><circle id="orbitDot3" cx="0" cy="0" r="4.5" fill="#55828b"/></g>
+    <g transform="rotate(-40 300 300)"><ellipse id="orbitPath4" cx="300" cy="300" rx="180" ry="180" stroke="#87bba2" stroke-width="0.7" opacity="0.35" fill="none"/><circle id="orbitDot4" cx="0" cy="0" r="4" fill="#c9e4ca"/></g>
+  </svg>
+
+  <div class="wrap hero-top">
+    <div class="eyebrow">THE ROADMAP</div>
+    <h1>Thorium projects need financing that <em><br>understands</em> the fuel cycle — We build <em>both</em></h1>
+    <p class="hero-sub">Utah Green Energy Technologies designs thorium molten salt reactors meant to be replicated, permitted, and financed like any other piece of infrastructure — quietly, repeatably, on schedule.</p>
+  </div>
+
+  <div class="wrap hero-actions">
+    <a href="#mission" class="btn primary">See the Roadmap →</a>
+    <a href="#invest" class="btn ghost">Investor Brief</a>
+  </div>
+
+  <div class="ticker-bar">
+    <div class="ticker-track">
+      <span>FIRST TEST LOOP <b>ONLINE</b></span>
+      <span>TARGET UNIT COST <b>FIXED, NO OVERRUNS</b></span>
+      <span>REGULATORY MAP <b>6 JURISDICTIONS</b></span>
+      <span>SITE <b>WASATCH FRONT, UT</b></span>
+      <span>FUEL CYCLE <b>Th-232 / U-235 SEED</b></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="mission" id="mission">
+    <div class="eyebrow">OUR MISSION</div>
+    <h2 class="reveal">Firm, dispatchable power from thorium molten salt reactors — <span class="accent">manufactured, not improvised.</span></h2>
+  </section>
+
+  <section class="proof">
+    <div class="reveal">
+      <h2>Building the case before we build the plant.</h2>
+    </div>
+    <div class="proof-copy reveal">
+      <p><strong>The regulatory, insurance, and safety work is happening alongside the reactor design</strong> — not after it. Every subsystem is modeled against NRC, IAEA, and Euratom frameworks from day one.</p>
+      <p>The goal is a unit small enough to fabricate off-site and simple enough to license on a predictable timeline, so the first commercial reactor isn't a one-off pilot — it's the first of a line.</p>
+    </div>
+  </section>
+
+  <div class="img-grid">
+    <div class="tex-card tex-1 reveal" data-cap="Primary salt loop, test rig"></div>
+    <div class="tex-card tex-2 reveal" data-cap="Fuel salt handling, dry bay"></div>
+  </div>
+
+  <section class="culture reveal">
+    <div class="reveal">
+      <h2>We work the way we want power to arrive: <span>quietly, honestly, on time.</span></h2>
+    </div>
+    <div class="reveal">
+      <p>sample</p>
+      <a href="#" class="link-arrow">Meet the team →</a>
+    </div>
+  </section>
+</main>
+
+<div class="wrap">
+  <section class="facility reveal" id="facility">
+    <div class="facility-cap reveal">
+      <p>Prospective reactor fabrication site</p>
+      <span>WASATCH FRONT, UTAH</span>
+    </div>
+  </section>
+
+  <section class="fixed-price reveal">
+    <div class="eyebrow">OUR BUSINESS MODEL</div>
+    <h2>Fixed price <span class="accent">per reactor unit.</span></h2>
+    <p>One upfront cost per unit, one fixed fuel-service fee per year, no overruns passed to the customer. The plant owner buys a number, not a schedule.</p>
+
+    <div class="container-block reveal">
+      <h3>Priced like <em>a utility bill,</em><br>not a megaproject.</h3>
+    </div>
+  </section>
+
+  <section class="timeline-stats reveal">
+    <div class="stats-head">
+      <div class="eyebrow">THE GAP</div>
+      <h2>The demand nobody is positioned to meet.</h2>
+    </div>
+    <div class="stats-list">
+      <div class="stat-card reveal">
+        <span class="stat-value counter" data-target="1">0</span>
+        <div class="stat-label">Operating thorium reactor worldwide</div>
+        <p class="stat-note">China's TMSR-LF1, 2 MW thermal, experimental. It reached criticality in October 2023. Every other programme is pre-criticality.</p>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-value counter" data-target="0">0</span>
+        <div class="stat-label">Molten salt reactors producing commercial power</div>
+        <p class="stat-note">Anywhere, ever. Sixty years after the technology was first demonstrated, no unit has generated electricity at commercial scale.</p>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-value counter" data-target="13000" data-suffix="+">0</span>
+        <div class="stat-label">Hours the MSRE ran at full power</div>
+        <p class="stat-note">Oak Ridge National Laboratory, 1965 to 1969. The reactor worked. The programme was ended anyway.</p>
+      </div>
+      <div class="stat-card reveal">
+        <span class="stat-value counter" data-target="1976">0</span>
+        <div class="stat-label">Year the US closed its molten salt programme</div>
+        <p class="stat-note">Cancelled on budget grounds after funding was withdrawn in 1973. Not for technical failure.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote reveal">
+    <span class="quote-mark">"</span>
+    <blockquote class="reveal">Our units have multiple advantages to ensure a successful business venture and the required staffing support and science programs and labs to ensure success of the science.</blockquote>
+    <div class="quote-attr"><b>Cecil Davis</b> — CEO, Utah Green Energy Technologies</div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="economics reveal" id="economics">
+    <div class="stats-head">
+      <div class="eyebrow">THE ECONOMICS</div>
+      <h2 class="reveal">Priced against everything else on the grid.</h2>
+      <p>Fixed-price fabrication and a 90 percent capacity factor put thorium molten salt power ahead of every dispatchable and intermittent alternative on the table today — before isotope revenue is even counted.</p>
+    </div>
+
+    <div class="plant-grid">
+      <div class="plant-card reveal">
+        <span class="plant-tag">10 MW CONFIGURATION</span>
+        <div class="plant-row"><span class="plant-value counter" data-target="15000000" data-prefix="$">0</span></div>
+        <div class="plant-label">Capital cost</div>
+        <div class="plant-sub">$1,500 / kW installed</div>
+        <div class="plant-row"><span class="plant-value counter" data-target="26" data-prefix="$" data-suffix="/MWh">0</span></div>
+        <div class="plant-label">LCOE, power only</div>
+      </div>
+      <div class="plant-card reveal">
+        <span class="plant-tag">250 MW CONFIGURATION</span>
+        <div class="plant-row"><span class="plant-value counter" data-target="153000000" data-prefix="$">0</span></div>
+        <div class="plant-label">Capital cost</div>
+        <div class="plant-sub">$612 / kW installed</div>
+        <div class="plant-row"><span class="plant-value counter" data-target="13" data-prefix="$" data-suffix="/MWh">0</span></div>
+        <div class="plant-label">LCOE, power only</div>
+      </div>
+    </div>
+
+    <div class="cf-block reveal">
+      <span class="eyebrow">CAPACITY FACTOR</span>
+      <div class="cf-bars">
+        <div class="cf-row">
+          <span class="cf-label">UGET, 10 MW &amp; 250 MW</span>
+          <div class="cf-track"><div class="cf-fill cf-uget" data-pct="90"></div></div>
+          <span class="cf-pct">90%</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-label">Indiana wind</span>
+          <div class="cf-track"><div class="cf-fill cf-wind" data-pct="32"></div></div>
+          <span class="cf-pct">32%</span>
+        </div>
+        <div class="cf-row">
+          <span class="cf-label">Indiana solar</span>
+          <div class="cf-track"><div class="cf-fill cf-solar" data-pct="16"></div></div>
+          <span class="cf-pct">16%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lcoe-block reveal">
+      <span class="eyebrow">LCOE AGAINST THE FIELD</span>
+      <div class="lcoe-list">
+        <div class="lcoe-row is-uget">
+          <span class="lcoe-name">UGET thorium MSR</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:5.6%;width:5.6%;"><span>$13–$26/MWh</span></div></div>
+        </div>
+        <div class="lcoe-row">
+          <span class="lcoe-name">Onshore wind</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:19.6%;width:8.7%;"><span>$45–$65</span></div></div>
+        </div>
+        <div class="lcoe-row">
+          <span class="lcoe-name">Natural gas combined cycle</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:23.9%;width:13%;"><span>$55–$85</span></div></div>
+        </div>
+        <div class="lcoe-row">
+          <span class="lcoe-name">Utility-scale solar</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:28.3%;width:8.7%;"><span>$65–$85</span></div></div>
+        </div>
+        <div class="lcoe-row">
+          <span class="lcoe-name">Light-water SMR (FOAK)</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:34.8%;width:30.4%;"><span>$80–$150</span></div></div>
+        </div>
+        <div class="lcoe-row">
+          <span class="lcoe-name">Conventional large nuclear</span>
+          <div class="lcoe-range"><div class="lcoe-bar" style="left:61.3%;width:34.3%;"><span>$141–$220</span></div></div>
+        </div>
+      </div>
+      <div class="lcoe-scale"><span>$0/MWh</span><span>$230/MWh</span></div>
+    </div>
+
+    <div class="isotope-block reveal">
+      <span class="eyebrow">ISOTOPE REVENUE UPSIDE</span>
+      <div class="isotope-grid">
+        <div class="isotope-card">
+          <span class="iso-value">$3M/yr</span>
+          <p>Isotope sales at that rate bring the 10 MW plant's effective LCOE to roughly <strong>$0/MWh</strong>.</p>
+        </div>
+        <div class="isotope-card">
+          <span class="iso-value">$20M/yr</span>
+          <p>Isotope sales at that rate bring the 250 MW plant's effective LCOE to about <strong>$3/MWh</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="partners-block reveal">
+      <span class="eyebrow">KEY PARTNERS &amp; LABS</span>
+      <div class="fuel-strip">
+        <div class="fuel-chip"><span class="dot thorium"></span>Idaho National Laboratory</div>
+        <div class="fuel-chip"><span class="dot uranium"></span>Brookhaven National Laboratory</div>
+        <div class="fuel-chip"><span class="dot salt"></span>Oak Ridge National Laboratory</div>
+        <div class="fuel-chip"><span class="dot thorium"></span>Nuclear Energy Institute</div>
+        <div class="fuel-chip"><span class="dot uranium"></span>Stonybrook Nuclear Institute</div>
+        <div class="fuel-chip"><span class="dot salt"></span>UNLV Nuclear Labs</div>
+        <div class="fuel-chip"><span class="dot thorium"></span>Flite Energy (Canada)</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="invest reveal" id="invest">
+  <div class="invest-inner">
+    <div class="eyebrow">INVEST IN UGET</div>
+    <h2 class="reveal">Ready to underwrite <span class="accent">the next fuel cycle?</span></h2>
+    <p>Thorium sits in the same fertile-fuel category solar and wind never touch: dense, dispatchable, and buildable at the pace demand actually grows.</p>
+    <div class="fuel-strip">
+      <div class="fuel-chip"><span class="dot thorium"></span>Th-232 (fertile)</div>
+      <div class="fuel-chip"><span class="dot uranium"></span>U-235 (fissile, seed)</div>
+      <div class="fuel-chip"><span class="dot salt"></span>Molten salt carrier</div>
+    </div>
+    <a href="#" class="btn primary">Request the Investor Brief →</a>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="news reveal" id="news">
+    <div class="news-head">
+      <h2>Latest updates</h2>
+      <a href="#" class="link-arrow">All updates →</a>
+    </div>
+    <div class="news-grid">
+      <div class="news-card reveal">
+        <div class="news-thumb thumb-1"></div>
+        <div class="news-tag">Regulatory</div>
+        <h3>Comparing NRC, IAEA, and Euratom licensing timelines for salt reactors</h3>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-thumb thumb-2"></div>
+        <div class="news-tag">Funding</div>
+        <h3>What ARDP, NEUP, and GAIN vouchers actually cover for early-stage teams</h3>
+      </div>
+      <div class="news-card reveal">
+        <div class="news-thumb thumb-3"></div>
+        <div class="news-tag">Insurance</div>
+        <h3>Reading the Lloyd's and EXIM requirements before you need them</h3>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <h2>Stay close to <span>the build.</span></h2>
+        <div class="signup">
+          <input type="email" placeholder="you@company.com">
+          <button type="button">Subscribe</button>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <h4>Company</h4>
+          <a href="#">Technology</a>
+          <a href="#">Team</a>
+          <a href="#">Careers</a>
+        </div>
+        <div>
+          <h4>Resources</h4>
+          <a href="#">Investor Brief</a>
+          <a href="#">Regulatory Docs</a>
+          <a href="#">Press</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Utah Green Energy Technologies</span>
+      <span>Draper, UT</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Animate page entrance
+gsap.from('.hero-top .eyebrow, .hero-top h1, .hero-sub, .hero-actions .btn', {
+  opacity: 0,
+  y: 30,
+  duration: 0.9,
+  ease: 'power3.out',
+  stagger: 0.14,
+  delay: 0.2
+});
+
+// Reveal sections on scroll
+gsap.utils.toArray('.reveal').forEach((section) => {
+  gsap.fromTo(section, {
+    opacity: 0,
+    y: 30
+  }, {
+    opacity: 1,
+    y: 0,
+    duration: 0.9,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: section,
+      start: 'top 90%',
+      toggleActions: 'play none none none'
+    }
+  });
+});
+
+// Atom model: electrons travel their own elliptical orbit, rings stay fixed
+function orbitDot(id, rx, ry, cx, cy, duration, dir, startAngle) {
+  const dot = document.getElementById(id);
+  if (!dot) return;
+  const proxy = { a: startAngle || 0 };
+  gsap.to(proxy, {
+    a: `+=${360 * (dir || 1)}`,
+    duration: duration,
+    repeat: -1,
+    ease: 'none',
+    onUpdate: () => {
+      const rad = proxy.a * Math.PI / 180;
+      dot.setAttribute('cx', cx + rx * Math.cos(rad));
+      dot.setAttribute('cy', cy + ry * Math.sin(rad));
+    }
+  });
+}
+orbitDot('orbitDot1', 260, 115, 300, 300, 14, 1, 0);
+orbitDot('orbitDot2', 260, 115, 300, 300, 18, -1, 90);
+orbitDot('orbitDot3', 260, 115, 300, 300, 22, 1, 180);
+orbitDot('orbitDot4', 180, 180, 300, 300, 10, -1, 45);
+
+// Nucleus pulse (anime.js)
+anime({
+  targets: '#atomNucleus',
+  scale: [1, 1.4, 1],
+  opacity: [1, 0.7, 1],
+  easing: 'easeInOutSine',
+  duration: 2600,
+  loop: true
+});
+
+// Atom entrance and idle float (motion.dev)
+if (window.Motion) {
+  const { animate } = window.Motion;
+  animate('#atomOrbit', { opacity: [0, 1], scale: [0.85, 1] }, { duration: 1.2, delay: 0.3, easing: 'ease-out' });
+  animate('#atomOrbit', { y: [0, -12, 0] }, { duration: 6.8, repeat: Infinity, easing: 'ease-in-out' });
+}
+
+// Ticker subtle fade in
+gsap.from('.ticker-bar', {
+  opacity: 0,
+  y: 24,
+  duration: 0.9,
+  ease: 'power3.out',
+  delay: 0.8
+});
+
+// Continuous horizontal ticker scroll
+const tickerTrack = document.querySelector('.ticker-track');
+if (tickerTrack) {
+  tickerTrack.innerHTML += tickerTrack.innerHTML;
+  gsap.to(tickerTrack, {
+    xPercent: -50,
+    ease: 'none',
+    duration: 24,
+    repeat: -1
+  });
+}
+
+// Counter animation for stats
+const statCounters = document.querySelectorAll('.counter');
+statCounters.forEach((el, index) => {
+  const target = parseInt(el.dataset.target, 10) || 0;
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix || '';
+
+  gsap.fromTo(el, { innerText: 0 }, {
+    innerText: target,
+    duration: 1.4,
+    ease: 'power1.out',
+    scrollTrigger: {
+      trigger: el,
+      start: 'top 85%',
+      once: true
+    },
+    snap: { innerText: 1 },
+    onUpdate() {
+      el.textContent = `${prefix}${Math.round(this.targets()[0].innerText).toLocaleString()}${suffix}`;
+    },
+    delay: index * 0.1
+  });
+});
+
+// Capacity factor bars fill on scroll (GSAP)
+gsap.utils.toArray('.cf-fill').forEach((bar) => {
+  gsap.fromTo(bar, { width: '0%' }, {
+    width: `${bar.dataset.pct}%`,
+    duration: 1.3,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: bar, start: 'top 90%', once: true }
+  });
+});
+
+// LCOE comparison bars fill on scroll (GSAP)
+gsap.utils.toArray('.lcoe-bar').forEach((bar) => {
+  const finalWidth = bar.style.width;
+  gsap.set(bar, { scaleX: 0, transformOrigin: 'left center' });
+  gsap.to(bar, {
+    scaleX: 1,
+    duration: 1.1,
+    ease: 'power2.out',
+    scrollTrigger: { trigger: bar, start: 'top 90%', once: true }
+  });
+});
+
+// Isotope card highlight pulse (anime.js)
+anime({
+  targets: '.iso-value',
+  color: ['#55828b', '#87bba2', '#55828b'],
+  easing: 'easeInOutSine',
+  duration: 3000,
+  loop: true,
+  delay: anime.stagger(400)
+});
+
+// Navigation bar animation (motion.dev)
+if (window.Motion) {
+  const { animate, stagger } = window.Motion;
+  const navLinkEls = document.querySelectorAll('.nav-links a');
+
+  // Staggered entrance on load
+  animate(
+    navLinkEls,
+    { opacity: [0, 1], y: [-10, 0] },
+    { duration: 0.6, delay: stagger(0.07, { startDelay: 0.2 }), easing: [0.22, 1, 0.36, 1] }
+  );
+
+  // Smooth per-link hover animation, replacing the old CSS transition
+  navLinkEls.forEach((link) => {
+    const underline = link.querySelector('.nav-underline');
+    const isContact = link.classList.contains('nav-contact');
+
+    link.addEventListener('mouseenter', () => {
+      if (!isContact) {
+        animate(link, { y: -2, color: '#55828b' }, { duration: 0.25, easing: [0.22, 1, 0.36, 1] });
+        animate(underline, { transform: 'scaleX(1)' }, { duration: 0.3, easing: [0.22, 1, 0.36, 1] });
+      } else {
+        animate(link, { backgroundColor: 'rgba(85,130,139,0.08)' }, { duration: 0.25, easing: 'ease-out' });
+      }
+    });
+
+    link.addEventListener('mouseleave', () => {
+      if (!isContact) {
+        animate(link, { y: 0, color: '#5f7679' }, { duration: 0.3, easing: [0.22, 1, 0.36, 1] });
+        animate(underline, { transform: 'scaleX(0)' }, { duration: 0.25, easing: [0.22, 1, 0.36, 1] });
+      } else {
+        animate(link, { backgroundColor: 'rgba(85,130,139,0)' }, { duration: 0.3, easing: 'ease-out' });
+      }
+    });
+
+    link.addEventListener('mousedown', () => {
+      animate(link, { scale: 0.97 }, { duration: 0.15, easing: 'ease-out' });
+    });
+    link.addEventListener('mouseup', () => {
+      animate(link, { scale: 1 }, { duration: 0.2, easing: 'ease-out' });
+    });
+  });
+}
+
+// Nav bar hide/reveal on scroll direction (motion.dev spring)
+(function () {
+  const navEl = document.querySelector('nav');
+  if (!navEl || !window.Motion) return;
+  const { animate } = window.Motion;
+  let lastY = window.scrollY;
+  let hidden = false;
+
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    const goingDown = currentY > lastY && currentY > 120;
+
+    if (goingDown && !hidden) {
+      hidden = true;
+      animate(navEl, { y: -90, opacity: 0.6 }, { duration: 0.4, easing: [0.22, 1, 0.36, 1] });
+    } else if (!goingDown && hidden) {
+      hidden = false;
+      animate(navEl, { y: 0, opacity: 1 }, { duration: 0.45, easing: [0.22, 1, 0.36, 1] });
+    }
+    lastY = currentY;
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
